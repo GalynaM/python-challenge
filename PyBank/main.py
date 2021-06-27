@@ -2,17 +2,7 @@
  "cells": [
   {
    "cell_type": "code",
-   "execution_count": 1,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "import os\n",
-    "import csv"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 26,
+   "execution_count": 27,
    "metadata": {},
    "outputs": [
     {
@@ -30,6 +20,9 @@
     }
    ],
    "source": [
+    "import os\n",
+    "import csv\n",
+    "\n",
     "path = os.path.join(\"Resources\", \"budget_data.csv\")\n",
     "\n",
     "with open(path, 'r') as csv_file:\n",
@@ -62,13 +55,6 @@
     "    print(great_increase)\n",
     "    print(great_decrease)\n"
    ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
   }
  ],
  "metadata": {
