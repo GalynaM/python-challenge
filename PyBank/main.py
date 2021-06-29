@@ -1,110 +1,100 @@
-{
- "cells": [
-  {
-   "cell_type": "code",
-   "execution_count": 46,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "\n",
-      "Financial Analysis\n",
-      "-----------------------\n",
-      "Total months: 86\n",
-      "Total: 38382578\n",
-      "Average Change: 446309.05\n",
-      "Greatest Increase in Profits: 1170593\n",
-      "Greatest Decrease in Profits: -1196225\n"
-     ]
-    }
-   ],
-   "source": [
-    "import os\n",
-    "import csv\n",
-    "\n",
-    "path_input = os.path.join(\"Resources\", \"budget_data.csv\")\n",
-    "path_output = os.path.join(\"Analysis\", \"budget_data_result.csv\")\n",
-    "\n",
-    "# ---------------------------\n",
-    "# Read data from source file\n",
-    "with open(path_input, 'r') as csv_input:\n",
-    "    \n",
-    "    csv_reader = csv.reader(csv_input, delimiter = ',')\n",
-    "  \n",
-    "    #Skip the headers\n",
-    "    next(csv_reader)\n",
-    "    \n",
-    "    # Add budget data values to the List     \n",
-    "    profit_column = [int(row[1]) for row in csv_reader]\n",
-    "    \n",
-    "    # Calculate the total number of months included in the dataset\n",
-    "    number_of_months = len(profit_column)\n",
-    "    \n",
-    "    # Calculate the net total amount of \"Profit/Losses\" over the entire period\n",
-    "    total_amount = sum(profit_column)\n",
-    "    \n",
-    "    # Calculate the average of the changes in \"Profit/Losses\" over the entire period\n",
-    "    average = round(total_amount/number_of_months,2)\n",
-    "    \n",
-    "    # Calculate the greatest increase in profits (date and amount) over the entire period\n",
-    "    great_increase = max(profit_column)\n",
-    "    \n",
-    "    # Calculate the greatest decrease in losses (date and amount) over the entire period\n",
-    "    great_decrease = min(profit_column)\n",
-    "    \n",
-    "    header_list = [\"Total months\", \"Total\", \"Average Change\", \n",
-    "                   \"Greatest Increase in Profits\", \"Greatest Decrease in Profits\"]\n",
-    "    \n",
-    "    value_list = [number_of_months, total_amount, average, great_increase, great_decrease] \n",
-    "    \n",
-    "    result_tuple = zip(header_list, value_list)\n",
-    "    \n",
-    "    print(\"\\nFinancial Analysis\\n-----------------------\")\n",
-    "\n",
-    "    for i in range(0,len(header_list)):\n",
-    "        print(f\"{header_list[i]}: {value_list[i]}\")\n",
-    "        \n",
-    "# ---------------------------------------------------------\n",
-    "# Write result to the output file\n",
-    "with open(path_output, 'w') as csv_output:\n",
-    "    \n",
-    "    csv_writer = csv.writer(csv_output, delimiter = ',')\n",
-    "    \n",
-    "    csv_writer.writerow([\"\\nFinancial Analysis\\n---------------------\"])\n",
-    "    \n",
-    "    for my_tuple in result_tuple:\n",
-    "        csv_writer.writerow(my_tuple)\n"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.8.5"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 4
-}
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[62]:
+
+
+import os
+import csv
+import statistics
+
+
+# In[73]:
+
+
+path_input = os.path.join("Resources", "budget_data.csv")
+path_output = os.path.join("Analysis", "budget_data_result.csv")
+
+# Read data from source file
+with open(path_input, 'r') as csv_input: 
+    csv_reader = csv.reader(csv_input, delimiter = ',')
+   
+    # Skip the headers
+    next(csv_reader)
+    
+    # Dave data to Dictionary with Key - Date: Value - Profit/Losses
+    date_profit = {}
+    for row in csv_reader:
+        date_profit[row[0]] = int(row[1])
+
+    #-----------Calculate the total number of months included in the dataset
+    number_of_months = len(date_profit)
+    
+    #-----------Calculate the net total amount of "Profit/Losses" over the entire period
+    total_amount = sum(date_profit.values())
+    
+     
+    monthly_change = []
+    
+    # Get Separate lists for Keys and Values from Dictionary date_profit
+    profit_values = list(date_profit.values())
+    date_values = list(date_profit.keys())
+    
+    max_increase=0
+    max_decrease=0
+    
+    for i in range(0, len(profit_values)-1):
+        # Calculate the monthly changes in "Profit/Losses" over the entire period
+        the_change = profit_values[i+1]-profit_values[i]
+        monthly_change.append(the_change)
+        
+    #-----------Calculate the greatest increase/decrease in profits (date and amount) over the entire period
+        if the_change > max_increase:
+            max_increase = the_change
+            best_month = date_values[i+1]
+            
+        if the_change < max_decrease:
+            max_decrease = the_change
+            worst_month = date_values[i+1]
+            
+    #-----------Calculate the average of the changes in "Profit/Losses" over the entire period
+    average_of_changes = round(statistics.mean(monthly_change), 2)
+    
+    # Specify variables for the final analysis
+    great_increase = (best_month, f"${max_increase}")
+    great_decrease = (worst_month, f"${max_decrease}")
+    
+    header_list = ["Total months", "Total", "Average of The Changes",
+                   "Greatest Increase in Profits", "Greatest Decrease in Profits"]
+    
+    value_list = [number_of_months, f"${total_amount}", f"${average_of_changes}",
+                  f"{great_increase[0]}: {great_increase[1]}", f"{great_decrease[0]}: {great_decrease[1]}"]
+    
+    result_tuple = zip(header_list, value_list)
+    
+    header_row = "\nFinancial Analysis\n-----------------------"
+    
+    # Analysis output--------------------------------------------------------------------------
+    
+    #Print result to the terminal
+    print(header_row)
+    
+    for i in range(0,len(header_list)):
+        print(f"{header_list[i]}: {value_list[i]}")
+   
+    # Write result to the output file  
+with open(path_output, 'w') as csv_output:
+        
+    csv_writer = csv.writer(csv_output, delimiter = ',')
+
+    csv_writer.writerow([header_row])
+
+    for my_tuple in result_tuple:
+        csv_writer.writerow(my_tuple)
+
+
+# In[ ]:
+
+
+
+
