@@ -22,7 +22,7 @@ with open(path_input, 'r') as csv_input:
     # Skip the headers
     next(csv_reader)
     
-    # Dave data to Dictionary with Key - Date: Value - Profit/Losses
+    # Save data to Dictionary with String Key - Date: Integer Value - Profit/Losses
     date_profit = {}
     for row in csv_reader:
         date_profit[row[0]] = int(row[1])
@@ -43,32 +43,35 @@ with open(path_input, 'r') as csv_input:
     max_increase=0
     max_decrease=0
     
-    for i in range(0, len(profit_values)-1):
-        # Calculate the monthly changes in "Profit/Losses" over the entire period
-        the_change = profit_values[i+1]-profit_values[i]
-        monthly_change.append(the_change)
-        
-    #-----------Calculate the greatest increase/decrease in profits (date and amount) over the entire period
-        if the_change > max_increase:
+    for i in range(0, len(date_profit)-1):
+         #Calculate the monthly changes in "Profit/Losses" over the entire period
+         the_change = list(date_profit.values())[i+1] - list(date_profit.values())[i]
+         monthly_change.append(the_change)
+
+         if the_change > max_increase:
             max_increase = the_change
-            best_month = date_values[i+1]
-            
-        if the_change < max_decrease:
+            best_month = list(date_profit.keys())[i+1]
+
+         if the_change < max_decrease:
             max_decrease = the_change
-            worst_month = date_values[i+1]
-            
+            worst_month = list(date_profit.keys())[i+1]
+
+       
+
     #-----------Calculate the average of the changes in "Profit/Losses" over the entire period
     average_of_changes = round(statistics.mean(monthly_change), 2)
     
     # Specify variables for the final analysis
     great_increase = (best_month, f"${max_increase}")
     great_decrease = (worst_month, f"${max_decrease}")
+  
     
     header_list = ["Total months", "Total", "Average of The Changes",
                    "Greatest Increase in Profits", "Greatest Decrease in Profits"]
     
     value_list = [number_of_months, f"${total_amount}", f"${average_of_changes}",
                   f"{great_increase[0]}: {great_increase[1]}", f"{great_decrease[0]}: {great_decrease[1]}"]
+
     
     result_tuple = zip(header_list, value_list)
     

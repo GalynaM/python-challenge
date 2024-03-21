@@ -19,7 +19,7 @@ path_output = os.path.join("Analysis", "election_data_result.csv")
 
 
 # Define variables
-# Dictionary for all voters
+# Dictionary of dictionaries: for each key there is a values and this value is a dictionary
 all_voters = {}
 
 # Set for candidates
@@ -29,16 +29,20 @@ candidates = set()
 candidate_votes = {}
 
 # Read from csv file
-with open(path_input, "r") as csv_file:   
+with open(path_input, "r") as csv_file:
+    #-- use csv.DictReader to have iterable object each element of which is a dictionary    
     csv_reader = csv.DictReader(csv_file, delimiter = ',')
     
     for row in csv_reader:
         
-        # Save poll data to Dictionary with Key - Voter ID: value - Dictionary with values for County and Candidate
+        # Save poll data to Dictionary with Key - Voter ID: value - Dictionary with voter ID, values for County and Candidate
         all_voters[row['Voter ID']] = row
         
         #---Find a complete list of candidates who received votes. Set() structure contains only unique values
-        candidates.add(all_voters[row['Voter ID']]['Candidate'])
+        #--change?why need row
+        #--candidates.add(all_voters[row['Voter ID']]['Candidate'])
+        #--candidates.add(row['Candidate'])
+        candidates.add(row['Candidate'])
 
     #-------Calculate the total number of votes cast
     total_votes = len(all_voters)
