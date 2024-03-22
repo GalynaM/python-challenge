@@ -12,5 +12,5 @@ Basic financial analysis was made on the given monthly profit/losses data findin
 - Average monthly change in profit.
 
 Input data - is csv file.
-Output result - css file.
+Output result - csv file.
 Libraries used: oc, csv, statistics.
