@@ -27,24 +27,19 @@ with open(path_input, 'r') as csv_input:
     for row in csv_reader:
         date_profit[row[0]] = int(row[1])
 
-    #-----------Calculate the total number of months included in the dataset
+    #---Calculate the total number of months included in the dataset
     number_of_months = len(date_profit)
     
-    #-----------Calculate the net total amount of "Profit/Losses" over the entire period
+    #---Calculate the net total amount of "Profit/Losses" over the entire period
     total_amount = sum(date_profit.values())
     
      
     monthly_change = []
-    
-    # Get Separate lists for Keys and Values from Dictionary date_profit
-    profit_values = list(date_profit.values())
-    date_values = list(date_profit.keys())
-    
     max_increase=0
     max_decrease=0
     
     for i in range(0, len(date_profit)-1):
-         #Calculate the monthly changes in "Profit/Losses" over the entire period
+         #Calculate the monthly changes in "Profit/Losses" for the entire period
          the_change = list(date_profit.values())[i+1] - list(date_profit.values())[i]
          monthly_change.append(the_change)
 
@@ -57,8 +52,7 @@ with open(path_input, 'r') as csv_input:
             worst_month = list(date_profit.keys())[i+1]
 
        
-
-    #-----------Calculate the average of the changes in "Profit/Losses" over the entire period
+    #---Calculate the average of the changes in "Profit/Losses" over the entire period
     average_of_changes = round(statistics.mean(monthly_change), 2)
     
     # Specify variables for the final analysis
