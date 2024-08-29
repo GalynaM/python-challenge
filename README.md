@@ -8,6 +8,8 @@ Basic financial analysis was made on the given monthly profit/losses data findin
 - The month with the greatest increase in profit with the value of increase.
 - The month with the greatest decrease in profit with the value of decrease.
 - Average monthly change in profit.
+![image](https://github.com/user-attachments/assets/3bd95009-7187-4fea-a3f7-e62e7a30d8c4)
+
 
 Input data - csv file "budget_data".
 Output result - csv file "budget_data_result".
