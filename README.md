@@ -9,17 +9,21 @@ Basic financial analysis was made on the given monthly profit/losses data findin
 - The month with the greatest decrease in profit with the value of decrease.
 - Average monthly change in profit.
 
-Input data - is csv file.
-Output result - csv file.
+Input data - csv file "budget_data".
+Output result - csv file "budget_data_result".
 Libraries used: oc, csv, statistics.
 
 
 
 PyPoll project.
 Election votes analysis.
+
 Given:
-Election data in csv file: voters, county they are from, candidate they voted for.
+Election data in csv file "election_data":
+voters, county the voter is from, candidate they voted for.
+
 Analysis output:
 - Total number of votes.
 - List of all candidates with calculated % of votes and number of votes they received.
 - Election winner.
+Output result is in csv file "election_data_result".
