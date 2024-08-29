@@ -27,3 +27,5 @@ Analysis output:
 - List of all candidates with calculated % of votes and number of votes they received.
 - Election winner.
 Output result is in csv file "election_data_result".
+![image](https://github.com/user-attachments/assets/4b020a67-a504-4837-a8f9-49ef1e9a0e7d)
+
